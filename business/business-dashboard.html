@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Business Dashboard</title>
+    <style>
+        body {
+            background-color: #fff0f5;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #d81b60;
+        }
+
+        .dashboard-section {
+            background-color: white;
+            padding: 20px;
+            margin: 30px auto;
+            width: 60%;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .info-value {
+            color: #333;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #b71c5a;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Welcome, <span id="business-name">Loading...</span>!</h2>
+
+    <div class="dashboard-section">
+        <p><span class="info-label">Location:</span> <span id="business-location">Loading...</span></p>
+        <p><span class="info-label">Google Profile ID:</span> <span id="business-id">Loading...</span></p>
+        <p><span class="info-label">Categories:</span> <span id="business-categories">Loading...</span></p>
+    </div>
+
+    <button class="btn" onclick="location.href='business_home.html'">Go to Home</button>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCYQBMwKw3StqGIJ1OP0Qnk9c0UmnatnQk",
+            authDomain: "skillforge-8e5b3.firebaseapp.com",
+            projectId: "skillforge-8e5b3",
+            storageBucket: "skillforge-8e5b3.appspot.com",
+            messagingSenderId: "126378296654",
+            appId: "1:126378296654:web:d3f0f7abb3fa444caf0a1f",
+            measurementId: "G-E6X2VQV0TN"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        const nameSpan = document.getElementById("business-name");
+        const locationSpan = document.getElementById("business-location");
+        const idSpan = document.getElementById("business-id");
+        const categoriesSpan = document.getElementById("business-categories");
+
+        const businessId = localStorage.getItem("businessId");
+
+        if (!businessId) {
+            alert("No business ID found. Please sign up or log in again.");
+        } else {
+            db.collection("businesses")
+                .where("googleProfileId", "==", businessId)
+                .limit(1)
+                .get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.empty) {
+                        nameSpan.textContent = "Business not found";
+                        return;
+                    }
+
+                    const businessData = querySnapshot.docs[0].data();
+
+                    nameSpan.textContent = businessData.name || "N/A";
+                    locationSpan.textContent = businessData.location || "N/A";
+                    idSpan.textContent = businessData.googleProfileId || "N/A";
+                    categoriesSpan.textContent = (businessData.categories || []).join(", ");
+                })
+                .catch((error) => {
+                    console.error("Error loading business data:", error);
+                    nameSpan.textContent = "Error loading data";
+                });
+        }
+    </script>
+</body>
+
+</html>

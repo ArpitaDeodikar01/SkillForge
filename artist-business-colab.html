@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collaboration - Artist View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #eaeaea;
+        }
+
+        h1,
+        h2 {
+            color: #2c3e50;
+        }
+
+        .collab-info {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            font-size: 16px;
+            margin: 10px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn.chat {
+            background-color: #2c3e50;
+        }
+
+        .btn.chat:hover {
+            background-color: #1c2833;
+        }
+
+        .btn.ship {
+            background-color: #2980b9;
+        }
+
+        .btn.ship:hover {
+            background-color: #1c5985;
+        }
+
+        .btn.feedback {
+            background-color: #16a085;
+        }
+
+        .btn.feedback:hover {
+            background-color: #117a65;
+        }
+
+        .section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        textarea {
+            height: 60px;
+        }
+
+        .feedback {
+            font-style: italic;
+            color: #555;
+        }
+
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 10px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2s;
+        }
+
+        @keyframes fadein {
+            from {
+                bottom: 10px;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeout {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: 10px;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Collaboration with Business: LocalBazaar Pvt. Ltd.</h1>
+
+    <div class="collab-info">
+        <h2>Terracotta Ecoware Set</h2>
+        <p><strong>Business:</strong> LocalBazaar Pvt. Ltd.</p>
+        <p><strong>Description:</strong> Supplying handmade eco-friendly kitchenware. Delivery expected in 10 days.</p>
+    </div>
+
+    <button class="btn chat" onclick="showSection('chat')">Chat with Business</button>
+    <button class="btn ship" onclick="markShipped()">Mark as Shipped</button>
+    <button class="btn feedback" onclick="showSection('feedback')">View Feedback</button>
+
+    <!-- Chat Section -->
+    <div id="chat" class="section">
+        <h3>Chat with LocalBazaar</h3>
+        <div id="chat-box">
+            <p><strong>You:</strong> Ready for delivery by Monday!</p>
+            <p><strong>Business:</strong> Perfect. We’re looking forward to it!</p>
+        </div>
+        <textarea id="chat-input" placeholder="Type your message..."></textarea>
+        <button class="btn chat" onclick="sendMessage()">Send</button>
+    </div>
+
+    <!-- Feedback UI -->
+    <div id="feedback" class="section">
+        <h3>Feedback from Businesses</h3>
+        <p class="feedback">⭐️⭐️⭐️⭐️⭐️ “Top-notch packaging and commitment to delivery timelines.”</p>
+        <p class="feedback">⭐️⭐️⭐️⭐️ “Great craftsmanship, minor delay but worth the wait!”</p>
+    </div>
+
+    <div id="toast">Marked as Shipped</div>
+
+    <script>
+        function showSection(sectionId) {
+            ['chat', 'feedback'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function markShipped() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 2500);
+        }
+
+        function sendMessage() {
+            const input = document.getElementById("chat-input");
+            const message = input.value.trim();
+            if (message) {
+                const chatBox = document.getElementById("chat-box");
+                const p = document.createElement("p");
+                p.innerHTML = `<strong>You:</strong> ${message}`;
+                chatBox.appendChild(p);
+                input.value = "";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Collaborations</title>
+    <link rel="stylesheet" href="colabstyle.css" />
+</head>
+
+<body>
+    <header>
+        <div class="logo">LOGO</div>
+        <h1>SKILLFORGE</h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="collabs.html" class="active">My Collaborations</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Collaboration Opportunities</h2>
+
+        <!-- Filter Dropdown -->
+        <select id="category" onchange="filterCollabs()">
+            <option value="all">All</option>
+            <option value="pottery">Pottery</option>
+            <option value="textile">Textile</option>
+            <option value="woodwork">Woodwork</option>
+        </select>
+
+        <!-- Collaboration Cards Container -->
+        <div id="collabContainer">
+            <!-- Example Card -->
+            <div class="collab-card pottery">
+                <h3>Pottery Workshop</h3>
+                <p>Looking for skilled artists to collaborate on handmade pottery for upcoming exhibition.</p>
+                <a href="/artist-business-colab.html">
+                    <button>Send Collaboration Request</button>
+                </a>
+            </div>
+
+            <div class="collab-card textile">
+                <h3>Textile Design</h3>
+                <p>Seeking textile artists for a new eco-friendly fashion line.</p>
+                <a href="/artist-business-colab.html">
+                    <button>Send Collaboration Request</button>
+                </a>
+            </div>
+
+            <div class="collab-card woodwork">
+                <h3>Woodcraft Team-Up</h3>
+                <p>Partnering with wood artisans for limited-edition home decor.</p>
+                <a href="/artist-business-colab.html">
+                    <button>Send Collaboration Request</button>
+                </a>
+            </div>
+        </div>
+
+        <button onclick="scrollToTop()" class="scroll-button">⬆️ Scroll to Top</button>
+    </main>
+
+    <script src="../script.js"></script>
+</body>
+
+</html>
